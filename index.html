@@ -25,16 +25,331 @@
         }
     </script>
     <style>
-        @keyframes drift {
-            from { transform: translateY(0px); }
-            to { transform: translateY(-2000px); }
-        }
-        .stars {
-            background: rgba(0, 0, 0, 0) url('https://www.transparenttextures.com/patterns/stardust.png') repeat top center;
-            animation: drift 150s linear infinite;
+        /* Pure CSS Animated Grid - No external images used */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         }
         .neon-text {
             text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-spaceDark text-gray-200 font-sans min-h-screen flex flex-col justify-between overflow-x-hidden relative">
+
+    <!-- Safe Background Overlays -->
+    <div class="fixed inset-0 bg-grid pointer-events-none z-0"></div>
+    <div class="fixed inset-0 bg-gradient-to-b from-blue-950/10 via-transparent to-spaceDark pointer-events-none z-0"></div>
+
+    <!-- GLOBAL NAVBAR -->
+    <header class="relative z-10 border-b border-gray-800/80 bg-spaceDark/80 backdrop-blur-md sticky top-0">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col lg:flex-row justify-between items-center gap-4">
+            
+            <!-- Logo Brand -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-8 h-8 rounded-full border-2 border-neonCyan flex items-center justify-center animate-spin" style="animation-duration: 12s;">
+                    <div class="w-3 h-3 rounded-full bg-baseBlue shadow-neon"></div>
+                </div>
+                <span class="text-xl font-black tracking-widest text-white neon-text">ORBIT <span class="text-neonCyan">B20</span></span>
+            </div>
+            
+            <!-- Navigation Hub -->
+            <nav class="flex flex-wrap justify-center gap-1 bg-black/40 p-1.5 rounded-xl border border-gray-800/60">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-lg text-xs md:text-sm font-semibold tracking-wide transition duration-200 text-neonCyan bg-gray-800/50">Home</button>
+                <button onclick="switchTab('architecture')" id="nav-architecture" class="nav-btn px-4 py-2 rounded-lg text-xs md:text-sm font-semibold tracking-wide transition duration-200 text-gray-400 hover:text-white">Architecture</button>
+                <button onclick="switchTab('tokenomics')" id="nav-tokenomics" class="nav-btn px-4 py-2 rounded-lg text-xs md:text-sm font-semibold tracking-wide transition duration-200 text-gray-400 hover:text-white">Tokenomics</button>
+                <button onclick="switchTab('roadmap')" id="nav-roadmap" class="nav-btn px-4 py-2 rounded-lg text-xs md:text-sm font-semibold tracking-wide transition duration-200 text-gray-400 hover:text-white">Roadmap</button>
+                <button onclick="switchTab('developers')" id="nav-developers" class="nav-btn px-4 py-2 rounded-lg text-xs md:text-sm font-semibold tracking-wide transition duration-200 text-gray-400 hover:text-white">Dev Docs</button>
+            </nav>
+
+            <!-- Web3 CTA -->
+            <button id="walletBtn" class="bg-transparent border border-neonCyan/70 text-neonCyan px-4 py-1.5 rounded-lg text-sm font-bold tracking-wide hover:bg-neonCyan hover:text-spaceDark shadow-neon transition duration-300">
+                Connect Wallet
+            </button>
+        </div>
+    </header>
+
+    <!-- CONTENT WRAPPER -->
+    <main class="relative z-10 flex-grow max-w-7xl w-full mx-auto px-6 py-12">
+
+        <!-- ================= TAB 1: HOME ================= -->
+        <section id="tab-home" class="tab-content active text-center max-w-4xl mx-auto py-6">
+            <div class="inline-flex items-center space-x-2 bg-baseBlue/10 border border-baseBlue/30 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-blue-400 mb-8 backdrop-blur-sm">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                <span>Trigger Status: Armed for Base Upgrade</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-black tracking-tight text-white mb-6 leading-tight">
+                The Next Generation of<br>
+                <span class="bg-gradient-to-r from-neonCyan to-baseBlue bg-clip-text text-transparent neon-text">Base Infrastructure.</span>
+            </h1>
+            
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+                Orbit B20 is a protocol foundation engineered natively for the Base L2 network, built to seamlessly optimize low-level token mechanics and smart contract routing.
+            </p>
+
+            <!-- Metrics Module -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto mb-12 text-left">
+                <div class="bg-spaceCard border border-gray-800/80 p-5 rounded-xl">
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Protocol Status</div>
+                    <div class="text-lg font-bold text-emerald-400 mt-2 flex items-center space-x-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span>100% Verified</span>
+                    </div>
+                </div>
+                <div class="bg-spaceCard border border-gray-800/80 p-5 rounded-xl">
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Target Standard</div>
+                    <div class="text-lg font-bold text-white mt-2">Base B20 Native</div>
+                </div>
+                <div class="bg-spaceCard border border-gray-800/80 p-5 rounded-xl">
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Total Supply</div>
+                    <div class="text-lg font-bold text-blue-400 mt-2">100,000,000,000</div>
+                </div>
+                <div class="bg-spaceCard border border-gray-800/80 p-5 rounded-xl">
+                    <div class="text-xs text-gray-500 font-bold uppercase tracking-wider">Relayer Status</div>
+                    <div class="text-lg font-bold text-yellow-500 mt-2 animate-pulse">Active Sync</div>
+                </div>
+            </div>
+
+            <!-- CTA Actions -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="switchTab('architecture')" class="w-full sm:w-auto bg-gradient-to-r from-baseBlue to-blue-700 text-white px-8 py-3.5 rounded-xl font-bold tracking-wide shadow-lg hover:brightness-110 transition duration-200">
+                    Explore Architecture
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: ARCHITECTURE ================= -->
+        <section id="tab-architecture" class="tab-content max-w-6xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-black text-white mb-4">Core Protocol Architecture</h2>
+                <p class="text-gray-400">Engineered with block-level accuracy to optimize liquidity routing across the platform.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-spaceCard border border-gray-800 p-6 rounded-2xl">
+                    <div class="w-12 h-12 rounded-lg bg-baseBlue/10 border border-baseBlue/30 flex items-center justify-center text-neonCyan mb-6 font-bold">01</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Relayer Activation</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Our off-chain execution relays keep a persistent cryptographic eye on the Base Core Network contract state to trigger instant routing configurations.
+                    </p>
+                </div>
+                <div class="bg-spaceCard border border-gray-800 p-6 rounded-2xl">
+                    <div class="w-12 h-12 rounded-lg bg-baseBlue/10 border border-baseBlue/30 flex items-center justify-center text-neonCyan mb-6 font-bold">02</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Liquidity Wrappers</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Orbit natively bridges fragmentation gaps. Our routing contracts automatically process multi-token structures without causing unexpected asset slippage.
+                    </p>
+                </div>
+                <div class="bg-spaceCard border border-gray-800 p-6 rounded-2xl">
+                    <div class="w-12 h-12 rounded-lg bg-baseBlue/10 border border-baseBlue/30 flex items-center justify-center text-neonCyan mb-6 font-bold">03</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Gas Optimization</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        By integrating low-level Yul and custom EVM bytecode assembly, we slashed storage operations down to keep execution highly cost-efficient.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: TOKENOMICS ================= -->
+        <section id="tab-tokenomics" class="tab-content max-w-6xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl font-black text-white mb-4">Token Framework & Yield Dynamics</h2>
+                <p class="text-gray-400">The native $ORBIT ecosystem token features a fixed-cap framework built entirely for operational utility.</p>
+            </div>
+
+            <div class="bg-spaceCard border border-gray-800 p-6 rounded-2xl mb-12 text-center">
+                <div class="text-xs uppercase tracking-widest text-gray-500 font-bold mb-1">Total Hard Cap Supply</div>
+                <div class="text-4xl font-black text-white tracking-tight bg-gradient-to-r from-neonCyan to-baseBlue bg-clip-text text-transparent">
+                    100,000,000,000 $ORBIT
+                </div>
+            </div>
+
+            <!-- Simulator Framework -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                <div class="lg:col-span-2 bg-spaceCard border border-gray-800 p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Ecosystem Staking Simulator</h3>
+                        <p class="text-gray-400 text-xs mb-6">Calculate your compounding returns, platform yield, and governance metrics in real time.</p>
+                        
+                        <div class="space-y-5">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Enter $ORBIT Amount</label>
+                                <input type="number" id="stakeAmount" value="500000" min="1000" class="w-full bg-black/40 border border-gray-700 focus:border-neonCyan outline-none px-4 py-3 rounded-xl text-white font-mono text-lg transition">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Select Lock Duration</label>
+                                <div class="grid grid-cols-3 gap-3">
+                                    <button onclick="setDuration(30, 0.08, 1)" id="dur-30" class="duration-btn bg-gray-800/50 border border-gray-700 text-white font-semibold py-2.5 rounded-xl text-xs transition">30 Days</button>
+                                    <button onclick="setDuration(90, 1.45, 1.5)" id="dur-90" class="duration-btn bg-baseBlue/10 border border-baseBlue/40 text-neonCyan font-semibold py-2.5 rounded-xl text-xs shadow-neon transition">90 Days</button>
+                                    <button onclick="setDuration(365, 0.28, 3)" id="dur-365" class="duration-btn bg-gray-800/50 border border-gray-700 text-white font-semibold py-2.5 rounded-xl text-xs transition">365 Days</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 bg-black/30 border border-gray-800 rounded-xl p-4 mt-6">
+                        <div>
+                            <div class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Projected Reward</div>
+                            <div id="rewardOutput" class="text-xl font-bold text-emerald-400 font-mono mt-1">17,876.71</div>
+                        </div>
+                        <div>
+                            <div class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Governance Weight</div>
+                            <div id="votingOutput" class="text-xl font-bold text-blue-400 font-mono mt-1">750,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-b from-spaceCard to-blue-950/10 border border-blue-900 p-6 rounded-2xl space-y-4">
+                    <h3 class="text-lg font-bold text-white">Core Utility Pillars</h3>
+                    <div class="space-y-4 text-xs text-gray-300">
+                        <p><strong class="text-white">Launchpool Access:</strong> Staking allocations grant tiers for upcoming ecosystem integrations.</p>
+                        <p><strong class="text-white">Fee Offsets:</strong> Access discount structures when routing via native protocol tracks.</p>
+                        <p><strong class="text-white">Ecosystem Power:</strong> Direct voting control over future platform parameters.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: ROADMAP ================= -->
+        <section id="tab-roadmap" class="tab-content max-w-4xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-black text-white mb-4">Strategic Framework Timeline</h2>
+                <p class="text-gray-400">Strictly managed phases aligned with network scaling benchmarks.</p>
+            </div>
+
+            <div class="relative border-l-2 border-gray-800 ml-4 md:ml-32 space-y-12">
+                <div class="relative pl-6">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-emerald-500 border-4 border-spaceDark shadow-md"></div>
+                    <h3 class="text-lg font-bold text-white">Phase 1: Validation</h3>
+                    <p class="text-gray-400 text-sm mt-1">Architecture framework testing and bytecode simulations finalized.</p>
+                </div>
+                <div class="relative pl-6">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-neonCyan border-4 border-spaceDark shadow-neon"></div>
+                    <h3 class="text-lg font-bold text-white">Phase 2: Core Scaling</h3>
+                    <p class="text-gray-400 text-sm mt-1">Deep infrastructure integrations with Base network ecosystem builders.</p>
+                </div>
+                <div class="relative pl-6">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-gray-700 border-4 border-spaceDark"></div>
+                    <h3 class="text-lg font-bold text-white">Phase 3: Liquidity Expansion</h3>
+                    <p class="text-gray-400 text-sm mt-1">Deployment of open platform incentivization pools and developer parameters.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 5: DEVELOPERS ================= -->
+        <section id="tab-developers" class="tab-content max-w-5xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl font-black text-white mb-4">Developer Reference</h2>
+                <p class="text-gray-400">Integrate with the Orbit automated routing layers easily.</p>
+            </div>
+
+            <div class="bg-spaceCard border border-gray-800 p-8 rounded-2xl">
+                <h3 class="text-xl font-bold text-white mb-2">Contract Interface Reference</h3>
+                <p class="text-gray-400 text-sm mb-4">External protocols can interact natively using standard permissionless routers.</p>
+                
+                <div class="bg-black/50 border border-gray-800 p-4 rounded-xl font-mono text-xs text-gray-300">
+                    <p><span class="text-blue-400">interface</span> <span class="text-yellow-400">IOrbitRouter</span> {</p>
+                    <p class="pl-4"><span class="text-purple-400">function</span> <span class="text-emerald-400">getLiquidityRatio</span>(address token) external view returns (uint256);</p>
+                    <p class="pl-4"><span class="text-purple-400">function</span> <span class="text-emerald-400">isSystemReady</span>() external view returns (bool);</p>
+                    <p>}</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 border-t border-gray-900 bg-black/25 backdrop-blur-sm mt-12">
+        <div class="max-w-7xl mx-auto px-6 py-6 text-center text-xs text-gray-500">
+            &copy; 2026 Orbit B20. Independent decentralized initiative.
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE LOGIC JS -->
+    <script>
+        let activeDays = 90;
+        let activeApy = 0.145;
+        let activeWeightMultiplier = 1.5;
+
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('text-neonCyan', 'bg-gray-800/50');
+                btn.classList.add('text-gray-400');
+            });
+
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            activeBtn.classList.remove('text-gray-400');
+            activeBtn.classList.add('text-neonCyan', 'bg-gray-800/50');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function calculateYield() {
+            const amountInput = document.getElementById('stakeAmount');
+            const amount = parseFloat(amountInput.value) || 0;
+
+            const yieldEarned = amount * activeApy * (activeDays / 365);
+            const governancePower = amount * activeWeightMultiplier;
+
+            document.getElementById('rewardOutput').innerHTML = `${yieldEarned.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} <span class="text-xs font-sans text-gray-400">$ORBIT</span>`;
+            document.getElementById('votingOutput').innerHTML = `${Math.floor(governancePower).toLocaleString('en-US')} <span class="text-xs font-sans text-gray-400">vPower</span>`;
+        }
+
+        function setDuration(days, apy, multiplier) {
+            activeDays = days;
+            activeApy = apy;
+            activeWeightMultiplier = multiplier;
+
+            const buttons = document.querySelectorAll('.duration-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-baseBlue/10', 'border-baseBlue/40', 'text-neonCyan', 'shadow-neon');
+                btn.classList.add('bg-gray-800/50', 'border-gray-700', 'text-white');
+            });
+
+            const activeBtn = document.getElementById(`dur-${days}`);
+            activeBtn.classList.remove('bg-gray-800/50', 'border-gray-700', 'text-white');
+            activeBtn.classList.add('bg-baseBlue/10', 'border-baseBlue/40', 'text-neonCyan', 'shadow-neon');
+
+            calculateYield();
+        }
+
+        document.getElementById('stakeAmount').addEventListener('input', calculateYield);
+        calculateYield();
+
+        const walletBtn = document.getElementById('walletBtn');
+        walletBtn.addEventListener('click', () => {
+            if (walletBtn.innerText === 'Connect Wallet') {
+                walletBtn.innerText = 'Connecting...';
+                setTimeout(() => {
+                    walletBtn.innerText = '0xOrbit...B20';
+                    walletBtn.classList.remove('text-neonCyan', 'border-neonCyan');
+                    walletBtn.classList.add('text-emerald-400', 'border-emerald-500/30', 'bg-emerald-500/10');
+                }, 900);
+            }
+        });
+    </script>
+</body>
+</html>            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
         }
         .tab-content {
             display: none;
